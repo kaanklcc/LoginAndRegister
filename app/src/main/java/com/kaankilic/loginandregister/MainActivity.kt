@@ -1,6 +1,7 @@
 package com.kaankilic.loginandregister
 
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LoginAndRegisterTheme {
-               LoginScreen()
+              SayfaGecisleri()
 
             }
         }
@@ -44,6 +45,16 @@ fun SayfaGecisleri(){
         composable(route = "third screen"){
             ThirdScreen(navController)
         }
+        composable(route= "login screen"){
+            LoginScreen(navController)
+        }
+        composable(route= "register screen"){
+            RegisterScreen(navController = navController)
+        }
+        composable(route = "space screen"){
+            SpacePage(navController)
+        }
+
 
     }
 

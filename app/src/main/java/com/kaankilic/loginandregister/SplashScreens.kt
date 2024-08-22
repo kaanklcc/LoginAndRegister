@@ -178,7 +178,9 @@ fun ThirdScreen(navController: NavController)
             )
 
             Spacer(modifier = Modifier.height(40.dp))
-            Button(onClick = { /*TODO*/ }, modifier = Modifier
+            Button(onClick = {
+                navController.navigate("login screen")
+            }, modifier = Modifier
                 .height(60.dp)
                 .width(250.dp) ) {
                 Text(text = "Let's Get Started", modifier = Modifier.padding(4.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold)

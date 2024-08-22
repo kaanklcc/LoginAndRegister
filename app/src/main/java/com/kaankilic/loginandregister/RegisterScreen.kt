@@ -1,10 +1,9 @@
 package com.kaankilic.loginandregister
+
 import android.view.animation.OvershootInterpolator
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,20 +39,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.kaankilic.loginandregister.ui.theme.LoginAndRegisterTheme
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
     var scale = remember { androidx.compose.animation.core.Animatable(0f) }
     var showOnlyImage by remember { mutableStateOf(false) }
     var animationCompleted by remember { mutableStateOf(false) }
@@ -69,22 +65,24 @@ fun LoginScreen(navController: NavController) {
                 )
             )
             animationCompleted = true
-
             kotlinx.coroutines.delay(3000)
-            navController.navigate("space screen")
+            navController.navigate("login screen")
         }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
+
         Image(
-            painter = painterResource(id = R.drawable.ppl),
+            painter = painterResource(id = R.drawable.yelkenn),
             contentDescription = "pisa",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(2.dp),
-            alpha = if (showOnlyImage) 0f else 0.75f
+                .padding(1.dp)
+                .align(Alignment.TopStart),
+
+            alpha = if (showOnlyImage) 0f else 0.65f
         )
 
         if (!showOnlyImage) {
@@ -95,21 +93,38 @@ fun LoginScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(98.dp))
+                Spacer(modifier = Modifier.height(100.dp))
                 Text(
-                    text = "WELCOME BACK", fontSize = 45.sp,
+                    text = "CREATE A NEW ", fontSize = 45.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
-                Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = "Login to your account",
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = "ACCOUNT ", fontSize = 45.sp,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 25.sp
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(10.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    placeholder = {
+                        Text(
+                            text = "Name", style = TextStyle(
+                                fontSize = 20.sp, color = Color.Black
+                            ), fontWeight = FontWeight.Bold
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    colors = TextFieldDefaults.textFieldColors(containerColor = Color(0xFFf8f8ff)),
+                    textStyle = TextStyle(
+                        fontSize = 20.sp, fontWeight = FontWeight.Bold
+                    )
+                )
+                Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedTextField(
                     value = email,
@@ -149,24 +164,18 @@ fun LoginScreen(navController: NavController) {
 
                 Button(onClick = {
                     showOnlyImage = true
-
                 }, modifier = Modifier
                     .fillMaxWidth()
-                    .padding(2.dp)) {
+                    .padding(4.dp)) {
                     Text(
-                        text = "Login", modifier = Modifier
+                        text = "Signup", modifier = Modifier
                             .align(Alignment.CenterVertically), fontSize = 20.sp
                     )
                 }
 
-                Text(
-                    text = "Forgot Password", modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(4.dp)
-                        .clickable { }, fontWeight = FontWeight.Bold, color = Color(0xFF4503fc), fontSize = 20.sp
-                )
+
                 Spacer(modifier = Modifier.height(10.dp))
-                Text(text = "Or login", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                Text(text = "Or register", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Row(
@@ -199,26 +208,14 @@ fun LoginScreen(navController: NavController) {
                     )
                 }
                 Spacer(modifier = Modifier.height(30.dp))
-                Row {
-                    Text(
-                        text = "Don't you have an account?",
-                        fontWeight = FontWeight.Bold, fontSize = 16.sp
-                    )
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Text(
-                        text = "Register Now",
-                        modifier = Modifier.clickable {
-                            navController.navigate("register screen")
-                        }, color = Color( 0xFF4503fc),
-                        fontWeight = FontWeight.Bold, fontSize = 20.sp
-                    )
-                }
+
+
             }
         }
 
         AnimatedVisibility(visible = showOnlyImage) {
             Image(
-                painter = painterResource(id = R.drawable.world),
+                painter = painterResource(id = R.drawable.register),
                 contentDescription = "world logo",
                 modifier = Modifier
                     .size(800.dp)
@@ -227,15 +224,6 @@ fun LoginScreen(navController: NavController) {
         }
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
